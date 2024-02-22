@@ -68,7 +68,7 @@ namespace Paperless.REST
             //services.AddScoped<IValidator<DocumentEntity>, DocumentEntityValidator>();
             services.AddValidatorsFromAssemblyContaining<DocumentEntityValidator>();
             //Add Automapper
-            //services.AddAutoMapper(typeof(DocumentToEntityMapper));
+            services.AddAutoMapper(typeof(DocumentToEntityMapper));
             services
                 // Don't need the full MVC stack for an API, see https://andrewlock.net/comparing-startup-between-the-asp-net-core-3-templates/
                 .AddControllers(options => {
