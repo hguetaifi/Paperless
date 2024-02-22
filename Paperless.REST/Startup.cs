@@ -30,6 +30,7 @@ using FluentValidation;
 using Paperless.Businesslogic.Entities;
 using Paperless.Businesslogic.Logic.Validation;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Logging;
 using Paperless.REST.Mappers;
 
@@ -64,8 +65,8 @@ namespace Paperless.REST
             services.AddCors();
 
             //Add Validator
-            services.AddScoped<IValidator<DocumentEntity>, DocumentEntityValidator>();
-            
+            //services.AddScoped<IValidator<DocumentEntity>, DocumentEntityValidator>();
+            services.AddValidatorsFromAssemblyContaining<DocumentEntityValidator>();
             //Add Automapper
             //services.AddAutoMapper(typeof(DocumentToEntityMapper));
             services
