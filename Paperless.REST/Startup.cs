@@ -26,6 +26,11 @@ using Paperless.REST.OpenApi;
 using Paperless.REST.Formatters;
 using Paperless.REST;
 using System.Threading.Tasks;
+using FluentValidation;
+using Paperless.Businesslogic.Entities;
+using Paperless.Businesslogic.Logic.Validation;
+using AutoMapper;
+using Paperless.REST.Mappers;
 
 namespace Paperless.REST
 {
@@ -55,9 +60,12 @@ namespace Paperless.REST
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            //Add Services
             services.AddCors();
-
-
+            //Add Validator
+            services.AddScoped<IValidator<DocumentEntity>, DocumentEntityValidator>();
+            //Add Automapper
+            //services.AddAutoMapper(typeof(DocumentToEntityMapper));
             services
                 // Don't need the full MVC stack for an API, see https://andrewlock.net/comparing-startup-between-the-asp-net-core-3-templates/
                 .AddControllers(options => {

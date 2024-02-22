@@ -5,6 +5,12 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paperless.Rest", "Paperless.Rest\Paperless.Rest.csproj", "{FFDC27CC-FCD3-43DA-A27C-FDFDD8A3EDC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paperless.Businesslogic.Interfaces", "Paperless.Businesslogic.Interfaces\Paperless.Businesslogic.Interfaces.csproj", "{4A1D239F-47D6-4F9E-B8BA-77492F1ADF9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paperless.Businesslogic.Entities", "Paperless.Businesslogic.Entities\Paperless.Businesslogic.Entities.csproj", "{02AAB6EA-3DEB-49D5-B5F6-91CE96CC8217}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paperless.Businesslogic.Logic", "Paperless.Businesslogic.Logic\Paperless.Businesslogic.Logic.csproj", "{FA389ECE-ED05-4729-91A5-E09EE5332CF2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +24,17 @@ Global
 		{FFDC27CC-FCD3-43DA-A27C-FDFDD8A3EDC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FFDC27CC-FCD3-43DA-A27C-FDFDD8A3EDC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FFDC27CC-FCD3-43DA-A27C-FDFDD8A3EDC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A1D239F-47D6-4F9E-B8BA-77492F1ADF9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A1D239F-47D6-4F9E-B8BA-77492F1ADF9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A1D239F-47D6-4F9E-B8BA-77492F1ADF9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A1D239F-47D6-4F9E-B8BA-77492F1ADF9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02AAB6EA-3DEB-49D5-B5F6-91CE96CC8217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02AAB6EA-3DEB-49D5-B5F6-91CE96CC8217}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02AAB6EA-3DEB-49D5-B5F6-91CE96CC8217}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02AAB6EA-3DEB-49D5-B5F6-91CE96CC8217}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA389ECE-ED05-4729-91A5-E09EE5332CF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA389ECE-ED05-4729-91A5-E09EE5332CF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA389ECE-ED05-4729-91A5-E09EE5332CF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA389ECE-ED05-4729-91A5-E09EE5332CF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -327,9 +327,9 @@ namespace Paperless.REST.Controllers
         [Consumes("multipart/form-data")]
         [ValidateModelState]
         [SwaggerOperation("UploadDocument")]
-        public virtual async Task<IActionResult> UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")] IFormFile uploadDocument)
+        public virtual IActionResult UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")] IFormFile uploadDocument)
         {
-
+//TODO: Add async keyword later
             //Document document = new Document();
             //document.Title = title;
             //document.Correspondent = correspondent;
@@ -343,7 +343,14 @@ namespace Paperless.REST.Controllers
             //var response = await _service.CreateDocument(documentBL);
 
             //return response;
-            return Ok(200);
+            string exampleJson = null;
+            exampleJson = "{\n  \"owner\" : 7,\n  \"user_can_change\" : true,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ \"\", \"\" ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
+            
+            var example = exampleJson != null
+                ? JsonConvert.DeserializeObject<UpdateDocument200Response>(exampleJson)
+                : default(UpdateDocument200Response);
+            //TODO: Change the data returned
+            return new ObjectResult(example);
         }
     }
 }

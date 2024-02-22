@@ -7,14 +7,18 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <Version>1.0.0</Version>
-    <AssemblyName>Paperless.REST</AssemblyName>
     <PackageId>Paperless.REST</PackageId>
     <UserSecretsId>dc6a34da-1b3b-4899-aaa5-7b8311641763</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..</DockerfileContext>
+    <AssemblyName>Paperless.REST</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="AutoMapper" Version="13.0.1" />
+	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+	  <PackageReference Include="FluentValidation" Version="11.9.0" />
+	  <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
 	  <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
       <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.8" />
@@ -25,6 +29,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    
+    <ProjectReference Include="..\Paperless.Businesslogic.Entities\Paperless.Businesslogic.Entities.csproj" />
+    <ProjectReference Include="..\Paperless.Businesslogic.Logic\Paperless.Businesslogic.Logic.csproj" />
   </ItemGroup>
 </Project>
