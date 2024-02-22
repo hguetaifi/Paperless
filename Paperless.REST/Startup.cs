@@ -30,6 +30,7 @@ using FluentValidation;
 using Paperless.Businesslogic.Entities;
 using Paperless.Businesslogic.Logic.Validation;
 using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Paperless.REST.Mappers;
 
 namespace Paperless.REST
@@ -39,7 +40,6 @@ namespace Paperless.REST
     /// </summary>
     public class Startup
     {
-        //private static readonly ILog _logger = LogManager.GetLogger(typeof(Startup));
         /// <summary>
         /// Constructor
         /// </summary>
@@ -48,7 +48,7 @@ namespace Paperless.REST
         {
             Configuration = configuration;
         }
-
+        
         /// <summary>
         /// The application configuration.
         /// </summary>
@@ -62,8 +62,10 @@ namespace Paperless.REST
         {
             //Add Services
             services.AddCors();
+
             //Add Validator
             services.AddScoped<IValidator<DocumentEntity>, DocumentEntityValidator>();
+            
             //Add Automapper
             //services.AddAutoMapper(typeof(DocumentToEntityMapper));
             services
@@ -79,7 +81,7 @@ namespace Paperless.REST
                         NamingStrategy = new CamelCaseNamingStrategy()
                     });
                 });
-
+            
             services
                 .AddSwaggerGen(c =>
                 {
@@ -112,7 +114,6 @@ namespace Paperless.REST
                 });
             services
                 .AddSwaggerGenNewtonsoftSupport();
-
         }
 
         /// <summary>
@@ -120,8 +121,11 @@ namespace Paperless.REST
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        /// <param name="logger"></param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
+        {             
+            logger.LogInformation("[START] Configure HTTP pipeline...");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -157,6 +161,7 @@ namespace Paperless.REST
                 {
                     endpoints.MapControllers();
                 });
+            logger.LogInformation("[END] ...");
         }
 
     }

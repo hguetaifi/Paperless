@@ -31,7 +31,10 @@ namespace Paperless.REST.Controllers
     {
         //private readonly IDocumentService _service;
         //private readonly IMapper _mapper;
-
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public DocumentsApiController()
         {
             //_service = service ?? throw new ArgumentNullException(nameof(_service));

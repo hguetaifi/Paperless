@@ -18,7 +18,7 @@ services:
     container_name: paperless-frontend
     image: nginx:latest
     volumes:
-      - ./PaperLess.Frontend:/usr/share/nginx/html/
+      - ./Paperless.Frontend:/usr/share/nginx/html/
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 80:80
