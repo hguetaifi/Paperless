@@ -65,8 +65,7 @@ namespace Paperless.REST
             services.AddCors();
 
             //Add Validator
-            //services.AddScoped<IValidator<DocumentEntity>, DocumentEntityValidator>();
-            services.AddValidatorsFromAssemblyContaining<DocumentEntityValidator>();
+            services.AddScoped<IValidator<DocumentEntity>, DocumentEntityValidator>();
             //Add Automapper
             services.AddAutoMapper(typeof(DocumentToEntityMapper));
             services

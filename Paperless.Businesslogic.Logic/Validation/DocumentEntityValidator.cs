@@ -9,13 +9,9 @@ public class DocumentEntityValidator : AbstractValidator<DocumentEntity>
     public DocumentEntityValidator()
     {
         //Document Validated by ID and Title
-        RuleSet("RequiredData", () =>
-        {
             RuleFor(document => document.Title).NotNull().WithMessage("Title required");
             RuleFor(document => document.Title).NotEmpty().WithMessage("Title required");
-            
             RuleFor(document => document.Id).NotNull().WithMessage("Id required");
             RuleFor(document => document.Id).NotEmpty().WithMessage("Id required");
-        });
     }
 }
