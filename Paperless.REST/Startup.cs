@@ -32,6 +32,8 @@ using Paperless.Businesslogic.Logic.Validation;
 using AutoMapper;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.Logging;
+using Paperless.Businesslogic.Interfaces;
+using Paperless.Businesslogic.Logic;
 using Paperless.REST.Mappers;
 
 namespace Paperless.REST
@@ -68,6 +70,9 @@ namespace Paperless.REST
             services.AddScoped<IValidator<DocumentEntity>, DocumentEntityValidator>();
             //Add Automapper
             services.AddAutoMapper(typeof(DocumentToEntityMapper));
+            //Add Services and Repos
+            services.AddScoped<IDocument, DocumentService>();
+            
             services
                 // Don't need the full MVC stack for an API, see https://andrewlock.net/comparing-startup-between-the-asp-net-core-3-templates/
                 .AddControllers(options => {

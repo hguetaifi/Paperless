@@ -20,6 +20,9 @@ using Newtonsoft.Json;
 using Paperless.REST.Attributes;
 using Paperless.REST;
 using System.Threading.Tasks;
+using Paperless.Businesslogic.Interfaces;
+using Paperless.Businesslogic.Entities;
+using AutoMapper;
 
 namespace Paperless.REST.Controllers
 {
@@ -29,16 +32,16 @@ namespace Paperless.REST.Controllers
     [ApiController]
     public class DocumentsApiController : ControllerBase
     {
-        //private readonly IDocumentService _service;
-        //private readonly IMapper _mapper;
+        private readonly IDocument _service;
+        private readonly IMapper _mapper;
         
         /// <summary>
         /// Constructor
         /// </summary>
-        public DocumentsApiController()
+        public DocumentsApiController(IDocument service, IMapper mapper)
         {
-            //_service = service ?? throw new ArgumentNullException(nameof(_service));
-            //_mapper = mapper ?? throw new ArgumentNullException(nameof(_mapper));
+            _service = service ?? throw new ArgumentNullException(nameof(_service));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(_mapper));
         }
 
 
@@ -330,30 +333,24 @@ namespace Paperless.REST.Controllers
         [Consumes("multipart/form-data")]
         [ValidateModelState]
         [SwaggerOperation("UploadDocument")]
-        public virtual IActionResult UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")] IFormFile uploadDocument)
+        public virtual async Task<IActionResult> UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")] IFormFile uploadDocument)
         {
-//TODO: Add async keyword later
-            //Document document = new Document();
-            //document.Title = title;
-            //document.Correspondent = correspondent;
-            //document.DocumentType = documentType;
-            //document.Tags = tags;
-            //document.UploadDocument = uploadDocument;
+            Document document = new Document()
+            {
+                Title = title,
+                Correspondent = correspondent,
+                DocumentType = documentType,
+                Tags = tags,
+                UploadDocument = uploadDocument
+            };
+            DocumentEntity documentEntity = _mapper.Map<DocumentEntity>(document);
+            bool success = await _service.CreateDocument(documentEntity);
 
-            ////use mapper here
-            //DocumentBL documentBL = _mapper.Map<DocumentBL>(document);
-
-            //var response = await _service.CreateDocument(documentBL);
-
-            //return response;
-            string exampleJson = null;
-            exampleJson = "{\n  \"owner\" : 7,\n  \"user_can_change\" : true,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ \"\", \"\" ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
-            
-            var example = exampleJson != null
-                ? JsonConvert.DeserializeObject<UpdateDocument200Response>(exampleJson)
-                : default(UpdateDocument200Response);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
+            if (success)
+            {
+                return StatusCode(StatusCodes.Status201Created);
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError, "Failed to create document.");
         }
     }
 }
