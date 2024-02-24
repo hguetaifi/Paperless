@@ -1,17 +1,35 @@
 version: '3.4'
 
 services:
+  # DB
+  paperless-db:
+    container_name: paperless-db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - paperless-network
+    restart: unless-stopped
+  
   # REST service
   paperless-rest:
     container_name: paperless-rest
     build:
       context: .
-      dockerfile:  Paperless.REST/Dockerfile
+      dockerfile: Paperless.REST/Dockerfile
     ports:
       - 8081:8081
     networks:
       - paperless-network
     restart: unless-stopped
+    depends_on:
+      - paperless-db
 
   # WebUI service
   paperless-frontend:
@@ -28,7 +46,10 @@ services:
     restart: unless-stopped
     depends_on:
       - paperless-rest
-
+    
 networks:
     paperless-network:
         driver: bridge
+        
+volumes:
+  db-data:

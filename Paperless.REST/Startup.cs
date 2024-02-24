@@ -31,11 +31,14 @@ using Paperless.Businesslogic.Entities;
 using Paperless.Businesslogic.Logic.Validation;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Paperless.Businesslogic.Interfaces;
 using Paperless.Businesslogic.Logic;
+using Paperless.DataAccessLayer.Interfaces;
+using Paperless.DataAccessLayer.Sql;
 using Paperless.REST.Mappers;
-
+using Paperless.Businesslogic.Logic.Mappers;
 namespace Paperless.REST
 {
     /// <summary>
@@ -65,12 +68,14 @@ namespace Paperless.REST
         {
             //Add Services
             services.AddCors();
-
+            //Add Automapper
+            services.AddAutoMapper(typeof(DocumentToEntityMapper),typeof(DocumentEntityToDtoMapper));
             //Add Validator
             services.AddScoped<IValidator<DocumentEntity>, DocumentEntityValidator>();
-            //Add Automapper
-            services.AddAutoMapper(typeof(DocumentToEntityMapper));
-            //Add Services and Repos
+            //Add DB
+            services.AddDbContext<DBContext>(options => options.UseNpgsql("Host=paperless-db;Username=root;Password=123;Database=paperless"));
+            //Add Services and Repositories
+            services.AddScoped<IDocumentRepository, DocumentRepository>();
             services.AddScoped<IDocument, DocumentService>();
             
             services

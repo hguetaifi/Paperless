@@ -32,5 +32,7 @@
     <ProjectReference Include="..\Paperless.Businesslogic.Entities\Paperless.Businesslogic.Entities.csproj" />
     <ProjectReference Include="..\Paperless.Businesslogic.Interfaces\Paperless.Businesslogic.Interfaces.csproj" />
     <ProjectReference Include="..\Paperless.Businesslogic.Logic\Paperless.Businesslogic.Logic.csproj" />
+    <ProjectReference Include="..\Paperless.DataAccessLayer.Interfaces\Paperless.DataAccessLayer.Interfaces.csproj" />
+    <ProjectReference Include="..\Paperless.DataAccessLayer.Sql\Paperless.DataAccessLayer.Sql.csproj" />
   </ItemGroup>
 </Project>

@@ -34,7 +34,7 @@ namespace Paperless.REST.Controllers
     {
         private readonly IDocument _service;
         private readonly IMapper _mapper;
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -55,7 +55,7 @@ namespace Paperless.REST.Controllers
         [Consumes("application/json")]
         [ValidateModelState]
         [SwaggerOperation("BulkEdit")]
-        public virtual IActionResult BulkEdit([FromBody]BulkEditRequest bulkEditRequest)
+        public virtual IActionResult BulkEdit([FromBody] BulkEditRequest bulkEditRequest)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
@@ -73,7 +73,7 @@ namespace Paperless.REST.Controllers
         [Route("/api/documents/{id}")]
         [ValidateModelState]
         [SwaggerOperation("DeleteDocument")]
-        public virtual IActionResult DeleteDocument([FromRoute (Name = "id")][Required]int id)
+        public virtual IActionResult DeleteDocument([FromRoute(Name = "id")] [Required] int id)
         {
 
             //TODO: Uncomment the next line to return response 204 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
@@ -93,16 +93,17 @@ namespace Paperless.REST.Controllers
         [ValidateModelState]
         [SwaggerOperation("DownloadDocument")]
         [SwaggerResponse(statusCode: 200, type: typeof(System.IO.Stream), description: "Success")]
-        public virtual IActionResult DownloadDocument([FromRoute (Name = "id")][Required]int id, [FromQuery (Name = "original")]bool? original)
+        public virtual IActionResult DownloadDocument([FromRoute(Name = "id")] [Required] int id,
+            [FromQuery(Name = "original")] bool? original)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(System.IO.Stream));
             string exampleJson = null;
-            
+
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
-            : default(System.IO.Stream);
+                ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
+                : default(System.IO.Stream);
             //TODO: Change the data returned
             return new ObjectResult(example);
         }
@@ -119,17 +120,19 @@ namespace Paperless.REST.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetDocument")]
         [SwaggerResponse(statusCode: 200, type: typeof(GetDocument200Response), description: "Success")]
-        public virtual IActionResult GetDocument([FromRoute (Name = "id")][Required]int id, [FromQuery (Name = "page")]int? page, [FromQuery (Name = "full_perms")]bool? fullPerms)
+        public virtual IActionResult GetDocument([FromRoute(Name = "id")] [Required] int id,
+            [FromQuery(Name = "page")] int? page, [FromQuery(Name = "full_perms")] bool? fullPerms)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(GetDocument200Response));
             string exampleJson = null;
-            exampleJson = "{\n  \"owner\" : 7,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  }, {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  } ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"permissions\" : {\n    \"view\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    },\n    \"change\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    }\n  },\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
-            
+            exampleJson =
+                "{\n  \"owner\" : 7,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  }, {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  } ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"permissions\" : {\n    \"view\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    },\n    \"change\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    }\n  },\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
+
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<GetDocument200Response>(exampleJson)
-            : default(GetDocument200Response);
+                ? JsonConvert.DeserializeObject<GetDocument200Response>(exampleJson)
+                : default(GetDocument200Response);
             //TODO: Change the data returned
             return new ObjectResult(example);
         }
@@ -144,17 +147,18 @@ namespace Paperless.REST.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetDocumentMetadata")]
         [SwaggerResponse(statusCode: 200, type: typeof(GetDocumentMetadata200Response), description: "Success")]
-        public virtual IActionResult GetDocumentMetadata([FromRoute (Name = "id")][Required]int id)
+        public virtual IActionResult GetDocumentMetadata([FromRoute(Name = "id")] [Required] int id)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(GetDocumentMetadata200Response));
             string exampleJson = null;
-            exampleJson = "{\n  \"archive_size\" : 6,\n  \"archive_metadata\" : [ {\n    \"prefix\" : \"prefix\",\n    \"namespace\" : \"namespace\",\n    \"value\" : \"value\",\n    \"key\" : \"key\"\n  }, {\n    \"prefix\" : \"prefix\",\n    \"namespace\" : \"namespace\",\n    \"value\" : \"value\",\n    \"key\" : \"key\"\n  } ],\n  \"original_metadata\" : [ \"\", \"\" ],\n  \"original_filename\" : \"original_filename\",\n  \"original_mime_type\" : \"original_mime_type\",\n  \"archive_checksum\" : \"archive_checksum\",\n  \"original_checksum\" : \"original_checksum\",\n  \"lang\" : \"lang\",\n  \"media_filename\" : \"media_filename\",\n  \"has_archive_version\" : true,\n  \"archive_media_filename\" : \"archive_media_filename\",\n  \"original_size\" : 0\n}";
-            
+            exampleJson =
+                "{\n  \"archive_size\" : 6,\n  \"archive_metadata\" : [ {\n    \"prefix\" : \"prefix\",\n    \"namespace\" : \"namespace\",\n    \"value\" : \"value\",\n    \"key\" : \"key\"\n  }, {\n    \"prefix\" : \"prefix\",\n    \"namespace\" : \"namespace\",\n    \"value\" : \"value\",\n    \"key\" : \"key\"\n  } ],\n  \"original_metadata\" : [ \"\", \"\" ],\n  \"original_filename\" : \"original_filename\",\n  \"original_mime_type\" : \"original_mime_type\",\n  \"archive_checksum\" : \"archive_checksum\",\n  \"original_checksum\" : \"original_checksum\",\n  \"lang\" : \"lang\",\n  \"media_filename\" : \"media_filename\",\n  \"has_archive_version\" : true,\n  \"archive_media_filename\" : \"archive_media_filename\",\n  \"original_size\" : 0\n}";
+
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<GetDocumentMetadata200Response>(exampleJson)
-            : default(GetDocumentMetadata200Response);
+                ? JsonConvert.DeserializeObject<GetDocumentMetadata200Response>(exampleJson)
+                : default(GetDocumentMetadata200Response);
             //TODO: Change the data returned
             return new ObjectResult(example);
         }
@@ -169,16 +173,16 @@ namespace Paperless.REST.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetDocumentPreview")]
         [SwaggerResponse(statusCode: 200, type: typeof(System.IO.Stream), description: "Success")]
-        public virtual IActionResult GetDocumentPreview([FromRoute (Name = "id")][Required]int id)
+        public virtual IActionResult GetDocumentPreview([FromRoute(Name = "id")] [Required] int id)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(System.IO.Stream));
             string exampleJson = null;
-            
+
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
-            : default(System.IO.Stream);
+                ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
+                : default(System.IO.Stream);
             //TODO: Change the data returned
             return new ObjectResult(example);
         }
@@ -193,17 +197,18 @@ namespace Paperless.REST.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetDocumentSuggestions")]
         [SwaggerResponse(statusCode: 200, type: typeof(GetDocumentSuggestions200Response), description: "Success")]
-        public virtual IActionResult GetDocumentSuggestions([FromRoute (Name = "id")][Required]int id)
+        public virtual IActionResult GetDocumentSuggestions([FromRoute(Name = "id")] [Required] int id)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(GetDocumentSuggestions200Response));
             string exampleJson = null;
-            exampleJson = "{\n  \"storage_paths\" : [ \"\", \"\" ],\n  \"document_types\" : [ \"\", \"\" ],\n  \"dates\" : [ \"\", \"\" ],\n  \"correspondents\" : [ \"\", \"\" ],\n  \"tags\" : [ \"\", \"\" ]\n}";
-            
+            exampleJson =
+                "{\n  \"storage_paths\" : [ \"\", \"\" ],\n  \"document_types\" : [ \"\", \"\" ],\n  \"dates\" : [ \"\", \"\" ],\n  \"correspondents\" : [ \"\", \"\" ],\n  \"tags\" : [ \"\", \"\" ]\n}";
+
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<GetDocumentSuggestions200Response>(exampleJson)
-            : default(GetDocumentSuggestions200Response);
+                ? JsonConvert.DeserializeObject<GetDocumentSuggestions200Response>(exampleJson)
+                : default(GetDocumentSuggestions200Response);
             //TODO: Change the data returned
             return new ObjectResult(example);
         }
@@ -218,16 +223,16 @@ namespace Paperless.REST.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetDocumentThumb")]
         [SwaggerResponse(statusCode: 200, type: typeof(System.IO.Stream), description: "Success")]
-        public virtual IActionResult GetDocumentThumb([FromRoute (Name = "id")][Required]int id)
+        public virtual IActionResult GetDocumentThumb([FromRoute(Name = "id")] [Required] int id)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(System.IO.Stream));
             string exampleJson = null;
-            
+
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
-            : default(System.IO.Stream);
+                ? JsonConvert.DeserializeObject<System.IO.Stream>(exampleJson)
+                : default(System.IO.Stream);
             //TODO: Change the data returned
             return new ObjectResult(example);
         }
@@ -250,17 +255,24 @@ namespace Paperless.REST.Controllers
         [ValidateModelState]
         [SwaggerOperation("GetDocuments")]
         [SwaggerResponse(statusCode: 200, type: typeof(GetDocuments200Response), description: "Success")]
-        public virtual IActionResult GetDocuments([FromQuery (Name = "Page")]int? page, [FromQuery (Name = "page_size")]int? pageSize, [FromQuery (Name = "query")]string query, [FromQuery (Name = "ordering")]string ordering, [FromQuery (Name = "tags__id__all")]List<int> tagsIdAll, [FromQuery (Name = "document_type__id")]int? documentTypeId, [FromQuery (Name = "storage_path__id__in")]int? storagePathIdIn, [FromQuery (Name = "correspondent__id")]int? correspondentId, [FromQuery (Name = "truncate_content")]bool? truncateContent)
+        public virtual IActionResult GetDocuments([FromQuery(Name = "Page")] int? page,
+            [FromQuery(Name = "page_size")] int? pageSize, [FromQuery(Name = "query")] string query,
+            [FromQuery(Name = "ordering")] string ordering, [FromQuery(Name = "tags__id__all")] List<int> tagsIdAll,
+            [FromQuery(Name = "document_type__id")] int? documentTypeId,
+            [FromQuery(Name = "storage_path__id__in")] int? storagePathIdIn,
+            [FromQuery(Name = "correspondent__id")] int? correspondentId,
+            [FromQuery(Name = "truncate_content")] bool? truncateContent)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(GetDocuments200Response));
             string exampleJson = null;
-            exampleJson = "{\n  \"next\" : 6,\n  \"all\" : [ 5, 5 ],\n  \"previous\" : 1,\n  \"count\" : 0,\n  \"results\" : [ {\n    \"owner\" : 4,\n    \"user_can_change\" : true,\n    \"archive_serial_number\" : 2,\n    \"notes\" : [ {\n      \"note\" : \"note\",\n      \"created\" : \"created\",\n      \"document\" : 1,\n      \"id\" : 7,\n      \"user\" : 1\n    }, {\n      \"note\" : \"note\",\n      \"created\" : \"created\",\n      \"document\" : 1,\n      \"id\" : 7,\n      \"user\" : 1\n    } ],\n    \"added\" : \"added\",\n    \"created\" : \"created\",\n    \"title\" : \"title\",\n    \"content\" : \"content\",\n    \"tags\" : [ 3, 3 ],\n    \"storage_path\" : 9,\n    \"archived_file_name\" : \"archived_file_name\",\n    \"modified\" : \"modified\",\n    \"correspondent\" : 2,\n    \"original_file_name\" : \"original_file_name\",\n    \"id\" : 5,\n    \"created_date\" : \"created_date\",\n    \"document_type\" : 7\n  }, {\n    \"owner\" : 4,\n    \"user_can_change\" : true,\n    \"archive_serial_number\" : 2,\n    \"notes\" : [ {\n      \"note\" : \"note\",\n      \"created\" : \"created\",\n      \"document\" : 1,\n      \"id\" : 7,\n      \"user\" : 1\n    }, {\n      \"note\" : \"note\",\n      \"created\" : \"created\",\n      \"document\" : 1,\n      \"id\" : 7,\n      \"user\" : 1\n    } ],\n    \"added\" : \"added\",\n    \"created\" : \"created\",\n    \"title\" : \"title\",\n    \"content\" : \"content\",\n    \"tags\" : [ 3, 3 ],\n    \"storage_path\" : 9,\n    \"archived_file_name\" : \"archived_file_name\",\n    \"modified\" : \"modified\",\n    \"correspondent\" : 2,\n    \"original_file_name\" : \"original_file_name\",\n    \"id\" : 5,\n    \"created_date\" : \"created_date\",\n    \"document_type\" : 7\n  } ]\n}";
-            
+            exampleJson =
+                "{\n  \"next\" : 6,\n  \"all\" : [ 5, 5 ],\n  \"previous\" : 1,\n  \"count\" : 0,\n  \"results\" : [ {\n    \"owner\" : 4,\n    \"user_can_change\" : true,\n    \"archive_serial_number\" : 2,\n    \"notes\" : [ {\n      \"note\" : \"note\",\n      \"created\" : \"created\",\n      \"document\" : 1,\n      \"id\" : 7,\n      \"user\" : 1\n    }, {\n      \"note\" : \"note\",\n      \"created\" : \"created\",\n      \"document\" : 1,\n      \"id\" : 7,\n      \"user\" : 1\n    } ],\n    \"added\" : \"added\",\n    \"created\" : \"created\",\n    \"title\" : \"title\",\n    \"content\" : \"content\",\n    \"tags\" : [ 3, 3 ],\n    \"storage_path\" : 9,\n    \"archived_file_name\" : \"archived_file_name\",\n    \"modified\" : \"modified\",\n    \"correspondent\" : 2,\n    \"original_file_name\" : \"original_file_name\",\n    \"id\" : 5,\n    \"created_date\" : \"created_date\",\n    \"document_type\" : 7\n  }, {\n    \"owner\" : 4,\n    \"user_can_change\" : true,\n    \"archive_serial_number\" : 2,\n    \"notes\" : [ {\n      \"note\" : \"note\",\n      \"created\" : \"created\",\n      \"document\" : 1,\n      \"id\" : 7,\n      \"user\" : 1\n    }, {\n      \"note\" : \"note\",\n      \"created\" : \"created\",\n      \"document\" : 1,\n      \"id\" : 7,\n      \"user\" : 1\n    } ],\n    \"added\" : \"added\",\n    \"created\" : \"created\",\n    \"title\" : \"title\",\n    \"content\" : \"content\",\n    \"tags\" : [ 3, 3 ],\n    \"storage_path\" : 9,\n    \"archived_file_name\" : \"archived_file_name\",\n    \"modified\" : \"modified\",\n    \"correspondent\" : 2,\n    \"original_file_name\" : \"original_file_name\",\n    \"id\" : 5,\n    \"created_date\" : \"created_date\",\n    \"document_type\" : 7\n  } ]\n}";
+
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<GetDocuments200Response>(exampleJson)
-            : default(GetDocuments200Response);
+                ? JsonConvert.DeserializeObject<GetDocuments200Response>(exampleJson)
+                : default(GetDocuments200Response);
             //TODO: Change the data returned
             return new ObjectResult(example);
         }
@@ -276,17 +288,18 @@ namespace Paperless.REST.Controllers
         [ValidateModelState]
         [SwaggerOperation("SelectionData")]
         [SwaggerResponse(statusCode: 200, type: typeof(SelectionData200Response), description: "Success")]
-        public virtual IActionResult SelectionData([FromBody]SelectionDataRequest selectionDataRequest)
+        public virtual IActionResult SelectionData([FromBody] SelectionDataRequest selectionDataRequest)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(SelectionData200Response));
             string exampleJson = null;
-            exampleJson = "{\n  \"selected_storage_paths\" : [ {\n    \"document_count\" : 6,\n    \"id\" : 0\n  }, {\n    \"document_count\" : 6,\n    \"id\" : 0\n  } ],\n  \"selected_document_types\" : [ {\n    \"document_count\" : 6,\n    \"id\" : 0\n  }, {\n    \"document_count\" : 6,\n    \"id\" : 0\n  } ],\n  \"selected_correspondents\" : [ {\n    \"document_count\" : 6,\n    \"id\" : 0\n  }, {\n    \"document_count\" : 6,\n    \"id\" : 0\n  } ],\n  \"selected_tags\" : [ {\n    \"document_count\" : 6,\n    \"id\" : 0\n  }, {\n    \"document_count\" : 6,\n    \"id\" : 0\n  } ]\n}";
-            
+            exampleJson =
+                "{\n  \"selected_storage_paths\" : [ {\n    \"document_count\" : 6,\n    \"id\" : 0\n  }, {\n    \"document_count\" : 6,\n    \"id\" : 0\n  } ],\n  \"selected_document_types\" : [ {\n    \"document_count\" : 6,\n    \"id\" : 0\n  }, {\n    \"document_count\" : 6,\n    \"id\" : 0\n  } ],\n  \"selected_correspondents\" : [ {\n    \"document_count\" : 6,\n    \"id\" : 0\n  }, {\n    \"document_count\" : 6,\n    \"id\" : 0\n  } ],\n  \"selected_tags\" : [ {\n    \"document_count\" : 6,\n    \"id\" : 0\n  }, {\n    \"document_count\" : 6,\n    \"id\" : 0\n  } ]\n}";
+
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<SelectionData200Response>(exampleJson)
-            : default(SelectionData200Response);
+                ? JsonConvert.DeserializeObject<SelectionData200Response>(exampleJson)
+                : default(SelectionData200Response);
             //TODO: Change the data returned
             return new ObjectResult(example);
         }
@@ -303,17 +316,19 @@ namespace Paperless.REST.Controllers
         [ValidateModelState]
         [SwaggerOperation("UpdateDocument")]
         [SwaggerResponse(statusCode: 200, type: typeof(UpdateDocument200Response), description: "Success")]
-        public virtual IActionResult UpdateDocument([FromRoute (Name = "id")][Required]int id, [FromBody]UpdateDocumentRequest updateDocumentRequest)
+        public virtual IActionResult UpdateDocument([FromRoute(Name = "id")] [Required] int id,
+            [FromBody] UpdateDocumentRequest updateDocumentRequest)
         {
 
             //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
             // return StatusCode(200, default(UpdateDocument200Response));
             string exampleJson = null;
-            exampleJson = "{\n  \"owner\" : 7,\n  \"user_can_change\" : true,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ \"\", \"\" ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
-            
+            exampleJson =
+                "{\n  \"owner\" : 7,\n  \"user_can_change\" : true,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ \"\", \"\" ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
+
             var example = exampleJson != null
-            ? JsonConvert.DeserializeObject<UpdateDocument200Response>(exampleJson)
-            : default(UpdateDocument200Response);
+                ? JsonConvert.DeserializeObject<UpdateDocument200Response>(exampleJson)
+                : default(UpdateDocument200Response);
             //TODO: Change the data returned
             return new ObjectResult(example);
         }
@@ -333,8 +348,12 @@ namespace Paperless.REST.Controllers
         [Consumes("multipart/form-data")]
         [ValidateModelState]
         [SwaggerOperation("UploadDocument")]
-        public virtual async Task<IActionResult> UploadDocument([FromForm (Name = "title")]string title, [FromForm (Name = "created")]DateTime? created, [FromForm (Name = "document_type")]int? documentType, [FromForm (Name = "tags")]List<int> tags, [FromForm (Name = "correspondent")]int? correspondent, [FromForm (Name = "document")] IFormFile uploadDocument)
+        public virtual async Task<IActionResult> UploadDocument([FromForm(Name = "title")] string title,
+            [FromForm(Name = "created")] DateTime? created, [FromForm(Name = "document_type")] int? documentType,
+            [FromForm(Name = "tags")] List<int> tags, [FromForm(Name = "correspondent")] int? correspondent,
+            IFormFile uploadDocument)
         {
+            //TODO: Find way to add File
             Document document = new Document()
             {
                 Title = title,
@@ -350,6 +369,7 @@ namespace Paperless.REST.Controllers
             {
                 return StatusCode(StatusCodes.Status201Created);
             }
+
             return StatusCode(StatusCodes.Status500InternalServerError, "Failed to create document.");
         }
     }

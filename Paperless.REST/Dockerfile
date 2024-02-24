@@ -12,16 +12,26 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 # Copy the code into the container
 WORKDIR /src
 COPY ["Paperless.REST/Paperless.REST.csproj", "Paperless.REST/"]
+
 COPY ["Paperless.Businesslogic.Logic/Paperless.Businesslogic.Logic.csproj","Paperless.Businesslogic.Logic/"]
 COPY ["Paperless.Businesslogic.Entities/Paperless.Businesslogic.Entities.csproj","Paperless.Businesslogic.Entities/"]
 COPY ["Paperless.Businesslogic.Interfaces/Paperless.Businesslogic.Interfaces.csproj","Paperless.Businesslogic.Interfaces/"]
 
+COPY ["Paperless.DataAccessLayer.Entities/Paperless.DataAccessLayer.Entities.csproj","Paperless.DataAccessLayer.Entities/"]
+COPY ["Paperless.DataAccessLayer.Interfaces/Paperless.DataAccessLayer.Interfaces.csproj","Paperless.DataAccessLayer.Interfaces/"]
+COPY ["Paperless.DataAccessLayer.Sql/Paperless.DataAccessLayer.Sql.csproj","Paperless.DataAccessLayer.Sql/"]
+
 # NuGet restore
 RUN dotnet restore "Paperless.REST/Paperless.REST.csproj"
 COPY ["Paperless.REST/", "Paperless.REST/"]
+
 COPY ["Paperless.Businesslogic.Logic/","Paperless.Businesslogic.Logic/"]
 COPY ["Paperless.Businesslogic.Entities/","Paperless.Businesslogic.Entities/"]
 COPY ["Paperless.Businesslogic.Interfaces/","Paperless.Businesslogic.Interfaces/"]
+
+COPY ["Paperless.DataAccessLayer.Entities/","Paperless.DataAccessLayer.Entities/"]
+COPY ["Paperless.DataAccessLayer.Interfaces/","Paperless.DataAccessLayer.Interfaces/"]
+COPY ["Paperless.DataAccessLayer.Sql/","Paperless.DataAccessLayer.Sql/"]
 
 # Build the API
 WORKDIR "Paperless.REST"
