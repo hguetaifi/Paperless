@@ -39,6 +39,9 @@ using Paperless.DataAccessLayer.Interfaces;
 using Paperless.DataAccessLayer.Sql;
 using Paperless.REST.Mappers;
 using Paperless.Businesslogic.Logic.Mappers;
+using Minio;
+using Minio.DataModel.Args;
+
 namespace Paperless.REST
 {
     /// <summary>
@@ -66,6 +69,7 @@ namespace Paperless.REST
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
+            
             //Add Services
             services.AddCors();
             //Add Automapper
@@ -77,7 +81,17 @@ namespace Paperless.REST
             //Add Services and Repositories
             services.AddScoped<IDocumentRepository, DocumentRepository>();
             services.AddScoped<IDocument, DocumentService>();
-            
+            services.AddSingleton<IMinioClient>(provider =>
+            {
+                var client = new MinioClient()
+                    .WithEndpoint("paperless-minio:9000")
+                    .WithCredentials("paperless", "paperless") 
+                    .Build();
+
+                EnsureRequiredBucketExists(client, "paperless-bucket").GetAwaiter().GetResult();
+
+                return client;
+            });
             services
                 // Don't need the full MVC stack for an API, see https://andrewlock.net/comparing-startup-between-the-asp-net-core-3-templates/
                 .AddControllers(options => {
@@ -172,6 +186,27 @@ namespace Paperless.REST
                     endpoints.MapControllers();
                 });
             logger.LogInformation("[END] ...");
+        }
+        private async Task EnsureRequiredBucketExists(IMinioClient minioService, string desiredBucketName)
+        {
+            if (await CheckIfBucketExists(minioService, desiredBucketName))
+            {
+                return;
+            }
+
+            await CreateNewBucket(minioService, desiredBucketName);
+        }
+
+        private async Task<bool> CheckIfBucketExists(IMinioClient minioService, string bucketName)
+        {
+            var checkArgs = new BucketExistsArgs().WithBucket(bucketName);
+            return await minioService.BucketExistsAsync(checkArgs);
+        }
+
+        private async Task CreateNewBucket(IMinioClient minioService, string bucketName)
+        {
+            var createArgs = new MakeBucketArgs().WithBucket(bucketName);
+            await minioService.MakeBucketAsync(createArgs);
         }
 
     }
