@@ -47,9 +47,27 @@ services:
     depends_on:
       - paperless-rest
     
+  # RabbitMQ service
+  paperless-rabbitmq:
+    container_name: paperless-rabbitmq
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    ports:
+      - 5672:5672 
+      - 15672:15672 
+    networks:
+      - paperless-network
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: paperless
+      RABBITMQ_DEFAULT_PASS: paperless
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
 networks:
     paperless-network:
         driver: bridge
         
 volumes:
   db-data:
+  rabbitmq-data:
