@@ -25,7 +25,7 @@ public class DocumentService : IDocument
         _mapper = mapper ?? throw new ArgumentNullException(nameof(_mapper));
     }
 
-    public async Task<bool> CreateDocument(DocumentEntity documentEntity)
+    public async Task<int> CreateDocument(DocumentEntity documentEntity)
     {
         _logger.LogInformation("Creating Document");
         try
@@ -34,30 +34,48 @@ public class DocumentService : IDocument
            if (!valid.IsValid)
            {
                _logger.LogInformation("Document is invalid");
-               return false;
+               throw new Exception("Document is invalid");
            }
 
            if(documentEntity.UploadDocument == null)
            {
                _logger.LogInformation("No Content found");
-               return false;
+               throw new Exception("No Content found");
            }
            DocumentDTO documentDto = _mapper.Map<DocumentDTO>(documentEntity);
-           documentDto.Title = documentEntity.UploadDocument.FileName;
+           if (documentEntity.UploadDocument.FileName != null) documentDto.Title = documentEntity.Title;
            int id = _repository.CreateDocument(documentDto);
            _logger.LogInformation("Document created");
-           return true; // Indicate success
+           return id; // Indicate success
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to create document");
-            return false; // Indicate failure
+            throw new Exception($"{ex}");
         }
     }
-
-    public DocumentEntity GetDocument(Guid id)
+    
+    public async Task<DocumentEntity> GetDocument(int id)
     {
-        return new DocumentEntity();
+        _logger.LogInformation($"Retreive Document [id:{id}]");
+        try
+        {
+            if(id == 0)
+            {
+                _logger.LogInformation("Not a valid Id found");
+                throw new Exception("Id cant be null");
+            }
+
+           DocumentDTO documentDto = _repository.GetDocument(id);
+           DocumentEntity documentEntity = _mapper.Map<DocumentEntity>(documentDto);
+            
+           return documentEntity; // Indicate success
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to get document");
+            throw new Exception($"{ex}"); // Indicate failure
+        }
     }
 
 }

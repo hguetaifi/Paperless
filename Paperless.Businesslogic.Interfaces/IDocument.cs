@@ -5,8 +5,8 @@ namespace Paperless.Businesslogic.Interfaces
 {
     public interface IDocument
     {
-       public Task<bool> CreateDocument(DocumentEntity documentEntity);
-       public DocumentEntity GetDocument(Guid id);
+       public Task<int> CreateDocument(DocumentEntity documentEntity);
+       public Task<DocumentEntity> GetDocument(int id);
     }
 }
 

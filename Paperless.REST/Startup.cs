@@ -39,6 +39,8 @@ using Paperless.DataAccessLayer.Interfaces;
 using Paperless.DataAccessLayer.Sql;
 using Paperless.REST.Mappers;
 using Paperless.Businesslogic.Logic.Mappers;
+using Paperless.Businesslogic.Logic.RabbitMQ;
+
 namespace Paperless.REST
 {
     /// <summary>
@@ -77,7 +79,10 @@ namespace Paperless.REST
             //Add Services and Repositories
             services.AddScoped<IDocumentRepository, DocumentRepository>();
             services.AddScoped<IDocument, DocumentService>();
-            
+            //Add RabbitMq
+            services.AddSingleton<IRabbitMqSender, RabbitMqSender>();
+            services.AddSingleton<IRabbitMqReceiver, RabbitMqReceiver>();
+
             services
                 // Don't need the full MVC stack for an API, see https://andrewlock.net/comparing-startup-between-the-asp-net-core-3-templates/
                 .AddControllers(options => {
