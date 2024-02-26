@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Paperless.Businesslogic.Entities;
 using Paperless.Businesslogic.Interfaces;
 using Paperless.DataAccessLayer.Entities;
 using Paperless.DataAccessLayer.Interfaces;
-using Paperless.DataAccessLayer.Sql;
+using Minio;
+using Minio.DataModel.Args;
 
 namespace Paperless.Businesslogic.Logic;
 
@@ -17,12 +17,14 @@ public class DocumentService : IDocument
     private IDocumentRepository _repository;
     private ILogger<DocumentService> _logger;
     private IMapper _mapper;
-    public DocumentService(IValidator<DocumentEntity> validator, ILogger<DocumentService> logger, IDocumentRepository repository, IMapper mapper)
+    private IMinioClient _minio;
+    public DocumentService(IValidator<DocumentEntity> validator, ILogger<DocumentService> logger, IDocumentRepository repository, IMapper mapper, IMinioClient minio)
     {
         _repository = repository ?? throw new ArgumentNullException(nameof(_repository));;
         _logger = logger ?? throw new ArgumentNullException(nameof(_logger));;
         _validator = validator ?? throw new ArgumentNullException(nameof(_validator));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(_mapper));
+        _minio = minio ?? throw new ArgumentNullException(nameof(_minio));
     }
 
     public async Task<int> CreateDocument(DocumentEntity documentEntity)
@@ -45,13 +47,39 @@ public class DocumentService : IDocument
            DocumentDTO documentDto = _mapper.Map<DocumentDTO>(documentEntity);
            if (documentEntity.UploadDocument.FileName != null) documentDto.Title = documentEntity.Title;
            int id = _repository.CreateDocument(documentDto);
-           _logger.LogInformation("Document created");
+           string fileId =  Guid.NewGuid().ToString(); //unique identifier
+           await SaveFile(documentEntity.UploadDocument,fileId);
+           _logger.LogInformation($"Document created: {fileId}");
            return id; // Indicate success
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Failed to create document");
             throw new Exception($"{ex}");
+        }
+    }
+    
+    private protected async Task SaveFile(IFormFile file, string fileId)
+    {
+        try
+        {
+            using var streamReader = new StreamReader(file.OpenReadStream());
+            var memoryStream = new MemoryStream();
+            await streamReader.BaseStream.CopyToAsync(memoryStream);
+            memoryStream.Position = 0;
+
+            var putObjectArgs = new PutObjectArgs()
+                .WithBucket("paperless-bucket")
+                .WithObject(fileId)
+                .WithContentType(file.ContentType)
+                .WithStreamData(memoryStream)
+                .WithObjectSize(memoryStream.Length);
+
+            await _minio.PutObjectAsync(putObjectArgs).ConfigureAwait(false);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"Minio Error: {e.Message}");
         }
     }
     

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Paperless.Businesslogic.Entities;
+﻿using Paperless.Businesslogic.Entities;
 
 namespace Paperless.Businesslogic.Interfaces
 {
