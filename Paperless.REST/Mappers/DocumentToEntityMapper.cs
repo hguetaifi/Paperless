@@ -3,7 +3,7 @@ using Paperless.Businesslogic.Entities;
 
 namespace Paperless.REST.Mappers;
 
-internal class DocumentToEntityMapper : Profile
+public class DocumentToEntityMapper : Profile
 {
     public DocumentToEntityMapper()
     {
