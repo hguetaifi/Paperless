@@ -12,5 +12,6 @@ public class DocumentEntityValidator : AbstractValidator<DocumentEntity>
             RuleFor(document => document.Title).NotEmpty().WithMessage("Title required");
             RuleFor(document => document.Id).NotNull().WithMessage("Id required");
             RuleFor(document => document.Id).NotEmpty().WithMessage("Id required");
+         //   RuleFor(document => document.Id).GreaterThan(0).WithMessage("Id must be greater than 0"); 
     }
 }

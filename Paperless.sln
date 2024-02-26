@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paperless.DataAccessLayer.I
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paperless.DataAccessLayer.Sql", "Paperless.DataAccessLayer.Sql\Paperless.DataAccessLayer.Sql.csproj", "{44F8B2B3-7185-4F59-94F7-65AE36F27AE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Paperless.UnitTests", "Paperless.UnitTests\Paperless.UnitTests.csproj", "{7DBEFD14-9932-4529-8B11-7F2A5D187857}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +56,9 @@ Global
 		{44F8B2B3-7185-4F59-94F7-65AE36F27AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44F8B2B3-7185-4F59-94F7-65AE36F27AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44F8B2B3-7185-4F59-94F7-65AE36F27AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DBEFD14-9932-4529-8B11-7F2A5D187857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DBEFD14-9932-4529-8B11-7F2A5D187857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DBEFD14-9932-4529-8B11-7F2A5D187857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DBEFD14-9932-4529-8B11-7F2A5D187857}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
