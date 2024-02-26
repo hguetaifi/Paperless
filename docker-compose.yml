@@ -1,6 +1,24 @@
 version: '3.4'
 
 services:
+  #MinIO Storage
+  paperless-minio:
+    container_name: paperless-minio
+    image: quay.io/minio/minio
+    environment:
+      - MINIO_ACCESS_KEY=paperless
+      - MINIO_SECRET_KEY=paperless
+      - MINIO_DEFAULT_BUCKETS=paperless-bucket
+    ports:
+      - 9000:9000
+      - 9090:9090
+    volumes:
+      - minio-data:/data
+    command: [ "server", "/data", "--console-address", ":9090" ]
+    networks:
+      - paperless-network
+    restart: unless-stopped
+    
   # DB
   paperless-db:
     container_name: paperless-db
@@ -71,3 +89,4 @@ networks:
 volumes:
   db-data:
   rabbitmq-data:
+  minio-data:
