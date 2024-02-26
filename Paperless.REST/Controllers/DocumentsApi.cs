@@ -112,35 +112,6 @@ namespace Paperless.REST.Controllers
         /// 
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="page"></param>
-        /// <param name="fullPerms"></param>
-        /// <response code="200">Success</response>
-        [HttpGet]
-        [Route("/api/documents/{id}")]
-        [ValidateModelState]
-        [SwaggerOperation("GetDocument")]
-        [SwaggerResponse(statusCode: 200, type: typeof(GetDocument200Response), description: "Success")]
-        public virtual IActionResult GetDocument([FromRoute(Name = "id")] [Required] int id,
-            [FromQuery(Name = "page")] int? page, [FromQuery(Name = "full_perms")] bool? fullPerms)
-        {
-
-            //TODO: Uncomment the next line to return response 200 or use other options such as return this.NotFound(), return this.BadRequest(..), ...
-            // return StatusCode(200, default(GetDocument200Response));
-            string exampleJson = null;
-            exampleJson =
-                "{\n  \"owner\" : 7,\n  \"archive_serial_number\" : 2,\n  \"notes\" : [ {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  }, {\n    \"note\" : \"note\",\n    \"created\" : \"created\",\n    \"document\" : 1,\n    \"id\" : 7,\n    \"user\" : 1\n  } ],\n  \"added\" : \"added\",\n  \"created\" : \"created\",\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n  \"tags\" : [ 5, 5 ],\n  \"storage_path\" : 5,\n  \"permissions\" : {\n    \"view\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    },\n    \"change\" : {\n      \"groups\" : [ 3, 3 ],\n      \"users\" : [ 9, 9 ]\n    }\n  },\n  \"archived_file_name\" : \"archived_file_name\",\n  \"modified\" : \"modified\",\n  \"correspondent\" : 6,\n  \"original_file_name\" : \"original_file_name\",\n  \"id\" : 0,\n  \"created_date\" : \"created_date\",\n  \"document_type\" : 1\n}";
-
-            var example = exampleJson != null
-                ? JsonConvert.DeserializeObject<GetDocument200Response>(exampleJson)
-                : default(GetDocument200Response);
-            //TODO: Change the data returned
-            return new ObjectResult(example);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
         /// <response code="200">Success</response>
         [HttpGet]
         [Route("/api/documents/{id}/metadata")]
@@ -332,7 +303,28 @@ namespace Paperless.REST.Controllers
             //TODO: Change the data returned
             return new ObjectResult(example);
         }
-
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <response code="200">Success</response>
+        [HttpGet]
+        [Route("/api/documents/{id}")]
+        [ValidateModelState]
+        [SwaggerOperation("GetDocument")]
+        [SwaggerResponse(statusCode: 200, type: typeof(GetDocument200Response), description: "Success")]
+        public virtual async Task<IActionResult> GetDocument([FromRoute(Name = "id")] [Required] int id)
+        {
+            DocumentEntity documentEntity = await _service.GetDocument(id);
+            Document document = _mapper.Map<Document>(documentEntity);
+            if (document.Title != null)
+            {
+                return new ObjectResult(document){StatusCode = 200};
+            }
+            return StatusCode(StatusCodes.Status500InternalServerError, "Failed to get document.");
+        }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -353,7 +345,6 @@ namespace Paperless.REST.Controllers
             [FromForm(Name = "tags")] List<int> tags, [FromForm(Name = "correspondent")] int? correspondent,
             IFormFile uploadDocument)
         {
-            //TODO: Find way to add File
             Document document = new Document()
             {
                 Title = title,
@@ -363,13 +354,12 @@ namespace Paperless.REST.Controllers
                 UploadDocument = uploadDocument
             };
             DocumentEntity documentEntity = _mapper.Map<DocumentEntity>(document);
-            bool success = await _service.CreateDocument(documentEntity);
+            int id = await _service.CreateDocument(documentEntity);
 
-            if (success)
+            if (id!=0)
             {
-                return StatusCode(StatusCodes.Status201Created);
+                return new ObjectResult(id){StatusCode = 201};
             }
-
             return StatusCode(StatusCodes.Status500InternalServerError, "Failed to create document.");
         }
     }

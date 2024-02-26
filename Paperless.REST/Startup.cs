@@ -42,6 +42,8 @@ using Paperless.Businesslogic.Logic.Mappers;
 using Minio;
 using Minio.DataModel.Args;
 
+using Paperless.Businesslogic.Logic.RabbitMQ;
+
 namespace Paperless.REST
 {
     /// <summary>
@@ -81,6 +83,7 @@ namespace Paperless.REST
             //Add Services and Repositories
             services.AddScoped<IDocumentRepository, DocumentRepository>();
             services.AddScoped<IDocument, DocumentService>();
+          
             services.AddSingleton<IMinioClient>(provider =>
             {
                 var client = new MinioClient()
@@ -92,6 +95,11 @@ namespace Paperless.REST
 
                 return client;
             });
+          
+            //Add RabbitMq
+            services.AddSingleton<IRabbitMqSender, RabbitMqSender>();
+            services.AddSingleton<IRabbitMqReceiver, RabbitMqReceiver>();
+          
             services
                 // Don't need the full MVC stack for an API, see https://andrewlock.net/comparing-startup-between-the-asp-net-core-3-templates/
                 .AddControllers(options => {

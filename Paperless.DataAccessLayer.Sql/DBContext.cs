@@ -5,7 +5,7 @@ namespace Paperless.DataAccessLayer.Sql;
 
 public class DBContext : DbContext
 {
-    public DbSet<DocumentDTO> Documents { get; set; }
+    public DbSet<DocumentDTO> Documents { get; init; }
     public DBContext() { }
     public DBContext(DbContextOptions<DBContext> options) : base(options) { }
     

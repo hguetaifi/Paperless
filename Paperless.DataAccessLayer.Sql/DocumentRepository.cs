@@ -19,7 +19,8 @@ public class DocumentRepository : IDocumentRepository
 
     public DocumentDTO GetDocument(int documentId)
     {
-        return _db.Documents.Find(documentId)!;
+        var temp = _db.Documents.Find(documentId);
+        return temp;
     }
 
 
