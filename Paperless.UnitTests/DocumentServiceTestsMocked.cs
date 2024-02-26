@@ -6,9 +6,9 @@ using AutoMapper;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Minio;
 using Paperless.DataAccessLayer.Entities;
 using Paperless.DataAccessLayer.Interfaces;
-
 
 namespace Paperless.UnitTests;
 
@@ -19,6 +19,7 @@ public class DocumentServiceTests
     private Mock<IDocumentRepository> _repositoryMock;
     private Mock<ILogger<DocumentService>> _loggerMock;
     private Mock<IMapper> _mapperMock;
+    private Mock<IMinioClient> _minIOMock;
     private DocumentService _service;
 
     [SetUp]
@@ -28,8 +29,8 @@ public class DocumentServiceTests
         _repositoryMock = new Mock<IDocumentRepository>();
         _loggerMock = new Mock<ILogger<DocumentService>>();
         _mapperMock = new Mock<IMapper>();
-        
-        _service = new DocumentService(_validatorMock.Object, _loggerMock.Object, _repositoryMock.Object, _mapperMock.Object);
+        _minIOMock = new Mock<IMinioClient>();
+        _service = new DocumentService(_validatorMock.Object, _loggerMock.Object, _repositoryMock.Object, _mapperMock.Object, _minIOMock.Object);
     }
 
     [Test]
